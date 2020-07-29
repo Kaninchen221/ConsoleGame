@@ -65,8 +65,8 @@ namespace ConsoleGame
 
         public bool IsPositionValid(Vector2i Position)
         {
-            return (Position.X > 0 && Position.X < Size.X &&
-                    Position.Y > 0 && Position.Y < Size.Y);
+            return (Position.X >= 0 && Position.X < Size.X &&
+                    Position.Y >= 0 && Position.Y < Size.Y);
         }
 
         public void FromString(string String, char SplitChar)
