@@ -36,15 +36,15 @@ namespace ConsoleGame
             Data = Builder.ToString();
         }
 
+        static public bool IsSizeValid(Vector2i Size)
+        {
+            return (Size.X > 0 && Size.Y > 0);
+        }
+
         public void Clear()
         {
             Data = string.Empty;
             Size = new Vector2i(0, 0);
-        }
-
-        static public bool IsSizeValid(Vector2i Size)
-        {
-            return (Size.X > 0 && Size.Y > 0);
         }
 
         public void ReplaceAt(char Char, Vector2i Position)
@@ -53,6 +53,16 @@ namespace ConsoleGame
                 throw new System.ArgumentException("Position is invalid");
 
             Data = Data.ReplaceAt(Char, Size.X * Position.Y + Position.X);
+        }
+        
+        public void ReplaceAt(string String, Vector2i Position)
+        {
+            int PositionInNormalString = (Size.X * Position.Y) + Position.X;
+
+            if (PositionInNormalString + String.Length > Data.Length)
+                throw new System.ArgumentException("Can't fit String in this String2D");
+
+            Data = Data.ReplaceAt(String, PositionInNormalString);
         }
 
         public char At(Vector2i Position)
@@ -67,6 +77,22 @@ namespace ConsoleGame
         {
             return (Position.X >= 0 && Position.X < Size.X &&
                     Position.Y >= 0 && Position.Y < Size.Y);
+        }
+
+        public string GetLine(int LineNumber)
+        {
+            if (!IsLineValid(LineNumber))
+                new System.ArgumentException($"LineNumber must be greater than 0 and less than {Size.Y}");
+
+            int CharNumber = LineNumber * Size.X;
+            var result = Data.Substring(CharNumber, Size.X);
+
+            return result;
+        }
+
+        public bool IsLineValid(int LineNumber)
+        {
+            return (LineNumber >= 0 && LineNumber < Size.Y);
         }
 
         public void FromString(string String, char SplitChar)
