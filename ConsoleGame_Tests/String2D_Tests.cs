@@ -9,6 +9,7 @@ namespace ConsoleGame_Tests
         ConsoleGame.String2D GetDefaultString(Vector2i Size)
         {
             ConsoleGame.String2D String = new ConsoleGame.String2D();
+            String.DefaultChar = '_';
             String.Resize(Size);
 
             return String;
@@ -64,7 +65,7 @@ namespace ConsoleGame_Tests
         }
 
         [TestMethod]
-        public void ReplaceAt_Test()
+        public void ReplaceAt_CharTest()
         {
             var Size = new Vector2i(10, 10);
             var String = GetDefaultString(Size);
@@ -75,6 +76,50 @@ namespace ConsoleGame_Tests
             String.ReplaceAt(ExpectedChar, Position);
 
             Assert.AreEqual(ExpectedChar, String.At(Position));
+        }
+
+        [TestMethod]
+        public void ReplaceAt_StringTest()
+        {
+            var Size = new Vector2i(10, 10);
+            var String2D = GetDefaultString(Size);
+            var String = new string("*_*_*_*");
+            var Position = new Vector2i(2, 3);
+            var ExpectedLine = new string("__*_*_*_*_");
+
+            String2D.ReplaceAt(String, Position);
+            
+            var Line = String2D.GetLine(3);
+            Assert.AreEqual(ExpectedLine, Line);
+        }
+
+        [TestMethod]
+        public void GetLine_Test()
+        {
+            var Size = new Vector2i(5, 10);
+            var String = GetDefaultString(Size);
+            String.ReplaceAt('*', new Vector2i(3, 4));
+            String.ReplaceAt('*', new Vector2i(2, 5));
+
+            var CorrectLine = String.GetLine(4);
+            Assert.AreEqual("___*_", CorrectLine);
+
+            CorrectLine = String.GetLine(5);
+            Assert.AreEqual("__*__", CorrectLine);
+        }
+
+        [TestMethod]
+        public void IsLineValid_Test()
+        {
+            var Size = new Vector2i(5, 10);
+            var String = GetDefaultString(Size);
+
+            Assert.IsFalse(String.IsLineValid(-1));
+            Assert.IsTrue(String.IsLineValid(0));
+            Assert.IsTrue(String.IsLineValid(1));
+            Assert.IsTrue(String.IsLineValid(9));
+            Assert.IsFalse(String.IsLineValid(10));
+            Assert.IsFalse(String.IsLineValid(11));
         }
 
         [TestMethod]
