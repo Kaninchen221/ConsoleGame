@@ -73,6 +73,11 @@ namespace ConsoleGame
             return Data[Size.X * Position.Y + Position.X];
         }
 
+        public int GetIndex(Vector2i Position)
+        {
+            return (Size.X * Position.Y) + Position.X;
+        }
+
         public bool IsPositionValid(Vector2i Position)
         {
             return (Position.X >= 0 && Position.X < Size.X &&
