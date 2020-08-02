@@ -94,6 +94,23 @@ namespace ConsoleGame_Tests
         }
 
         [TestMethod]
+        public void IsPositionValid_Test()
+        {
+            var Size = new Vector2i(5, 10);
+            var String = GetDefaultString(Size);
+
+            var InvalidMinusPosition = new Vector2i(-1, -1);
+            var ZeroPosition = new Vector2i(0, 0);
+            var TopPosition = new Vector2i(4, 9);
+            var InvalidOutOfRangePosition = new Vector2i(5, 10);
+
+            Assert.IsFalse(String.IsPositionValid(InvalidMinusPosition));
+            Assert.IsTrue(String.IsPositionValid(ZeroPosition));
+            Assert.IsTrue(String.IsPositionValid(TopPosition));
+            Assert.IsFalse(String.IsPositionValid(InvalidOutOfRangePosition));
+        }
+
+        [TestMethod]
         public void GetLine_Test()
         {
             var Size = new Vector2i(5, 10);
