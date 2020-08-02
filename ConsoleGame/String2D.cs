@@ -52,17 +52,17 @@ namespace ConsoleGame
             if (!IsPositionValid(Position))
                 throw new System.ArgumentException("Position is invalid");
 
-            Data = Data.ReplaceAt(Char, Size.X * Position.Y + Position.X);
+            Data = Data.ReplaceAt(Char, GetIndex(Position));
         }
         
         public void ReplaceAt(string String, Vector2i Position)
         {
-            int PositionInNormalString = (Size.X * Position.Y) + Position.X;
+            int DataIndex = GetIndex(Position);
 
-            if (PositionInNormalString + String.Length > Data.Length)
+            if (DataIndex + String.Length > Data.Length)
                 throw new System.ArgumentException("Can't fit String in this String2D");
 
-            Data = Data.ReplaceAt(String, PositionInNormalString);
+            Data = Data.ReplaceAt(String, DataIndex);
         }
 
         public char At(Vector2i Position)
@@ -70,7 +70,7 @@ namespace ConsoleGame
             if (!IsPositionValid(Position))
                 throw new System.ArgumentException("Position is invalid");
 
-            return Data[Size.X * Position.Y + Position.X];
+            return Data[GetIndex(Position)];
         }
 
         public int GetIndex(Vector2i Position)
