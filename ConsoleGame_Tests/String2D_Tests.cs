@@ -94,6 +94,18 @@ namespace ConsoleGame_Tests
         }
 
         [TestMethod]
+        public void GetIndex_Test()
+        {
+            var Size = new Vector2i(4, 10);
+            var String2D = GetDefaultString(Size);
+
+            int Index = String2D.GetIndex(new Vector2i(2, 4));
+            int ExpectedIndex = 18;
+
+            Assert.AreEqual(ExpectedIndex, Index);
+        }
+
+        [TestMethod]
         public void IsPositionValid_Test()
         {
             var Size = new Vector2i(5, 10);
