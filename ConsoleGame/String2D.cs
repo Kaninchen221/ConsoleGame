@@ -7,15 +7,9 @@ namespace ConsoleGame
 {
     public class String2D : ICloneable
     {
-        public string Data { get; private set; }
-        public Vector2i Size { get; private set; }
+        public string Data { get; private set; } = new string ("");
+        public Vector2i Size { get; private set; } = new Vector2i();
         public char DefaultChar { get; set; }
-
-        public String2D()
-        {
-            Data = new string("");
-            Size = new Vector2i();
-        }
 
         public void Resize(Vector2i Size)
         {
