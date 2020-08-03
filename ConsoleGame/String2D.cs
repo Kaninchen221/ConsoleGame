@@ -81,7 +81,7 @@ namespace ConsoleGame
         public string GetLine(int LineNumber)
         {
             if (!IsLineValid(LineNumber))
-                new System.ArgumentException($"LineNumber must be greater than 0 and less than {Size.Y}");
+                throw new System.ArgumentException($"LineNumber must be greater than 0 and less than {Size.Y}");
 
             int CharNumber = LineNumber * Size.X;
             var result = Data.Substring(CharNumber, Size.X);
