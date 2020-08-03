@@ -18,6 +18,12 @@ namespace ConsoleGame
             this.Y = Y;
         }
 
+        public Vector2i(Vector2i Other)
+        {
+            this.X = Other.X;
+            this.Y = Other.Y;
+        }
+
         public bool CompareTo(Vector2i Other)
         {
             return (this.X == Other.X && this.Y == Other.Y);
