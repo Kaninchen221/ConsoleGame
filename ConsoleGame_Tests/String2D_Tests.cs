@@ -185,5 +185,33 @@ namespace ConsoleGame_Tests
             Assert.IsTrue(String.Size.CompareTo(CopyOfString.Size));
         }
 
+        [TestMethod]
+        public void Foreach_Test()
+        {
+            var String2D = new String2D();
+            
+            var String = new string("xx_xx x_x_x _xxx_ x_x_x xx_xx");
+            String2D.FromString(String, ' ');
+
+            var ExpectedString = new string("xx_xxx_x_x_xxx_x_x_xxx_xx");
+            var ExpectedChar = ExpectedString.GetEnumerator();
+            ExpectedChar.MoveNext();
+
+            int ExpectedIndex = 0;
+
+            String2D.Foreach((char String2DChar, Vector2i Position) =>
+            {
+                bool CharsAreSame = (String2DChar == ExpectedChar.Current);
+
+                int Index = String2D.GetIndex(Position);
+                bool IndexesAreSame = (Index == ExpectedIndex);
+                
+                Assert.IsTrue(CharsAreSame);
+                Assert.IsTrue(IndexesAreSame);
+
+                ExpectedIndex += 1;
+                ExpectedChar.MoveNext();
+            });
+        }
     }
 }
