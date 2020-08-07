@@ -119,5 +119,23 @@ namespace ConsoleGame
         {
             return this.MemberwiseClone();
         }
+
+        public void Foreach(Action<Char, Vector2i> Callable)
+        {
+            var Position = new Vector2i(0, 0);
+
+            foreach (var Char in Data)
+            {
+                Callable(Char, Position);
+
+                if (Position.X == Size.X - 1)
+                {
+                    Position.X = 0;
+                    Position.Y += 1;
+                }
+                else
+                    Position.X += 1;
+            }
+        }
     }
 }
