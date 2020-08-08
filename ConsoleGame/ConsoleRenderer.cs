@@ -22,24 +22,18 @@ namespace ConsoleGame
 
         public void Draw(Texture Texture, RenderStates States)
         {
-            ApplyRenderStates(States);
+            ApplyForegroundColor(States.ForegroundColor);
+            ApplyBackgroundColor(States.BackgroundColor);
 
-            var Position = new Vector2i(States.Position);
-            var Offset = new Vector2i(0, 0);
-            foreach(var Char in Texture.Data)
+            var Offset = States.Position;
+            Texture.Foreach((char Char, Vector2i CharPosition) =>
             {
-                ApplyPosition(new Vector2i(Position.X + Offset.X, Position.Y + Offset.Y));
+                var Position = Offset + CharPosition;
+                ApplyPosition(Position);
 
                 Console.Write(Char);
 
-                if (Offset.X == Texture.Size.X - 1)
-                {
-                    Offset.X = 0;
-                    Offset.Y += 1;
-                }
-                else
-                    Offset.X += 1;
-            }
+            });
         }
         private void ApplyRenderStates(RenderStates States)
         {
@@ -48,6 +42,17 @@ namespace ConsoleGame
             Console.ForegroundColor = States.ForegroundColor;
             Console.BackgroundColor = States.BackgroundColor;
         }
+
+        private void ApplyForegroundColor(ConsoleColor Color)
+        {
+            Console.ForegroundColor = Color;
+        }
+
+        private void ApplyBackgroundColor(ConsoleColor Color)
+        {
+            Console.BackgroundColor = Color;
+        }
+
         private void ApplyPosition(Vector2i Position)
         {
             if (Position == null)
